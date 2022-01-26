@@ -102,3 +102,4 @@ dist
 
 # TernJS port file
 .tern-port
+.ipynb_checkpoints/insurance_database-checkpoint.ipynb
