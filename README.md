@@ -55,6 +55,7 @@ Our team consisted of the following individuals (alphabetized by last name):
 
 4. After all the data has been uploaded, open the Jupyter Notebook.  
 5. In the Configuration section of the Jupyter Notebook, replace the connection string place holder with the information for your MySQL Workbench database.  For example, if the values for `username`, `password`, `localhost`, and `database` are `bbe114f`, `2388`, `us-cdbr-iron-east-02.cleardb.net`, and `heroku_7920e9`, respectively, the connection string filled with database information is written like this:
+
     ```
     %sql mysql+mysqldb://bbe114f:2388@us-cdbr-iron-east-02.cleardb.net/heroku_7920e9
     ```
