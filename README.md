@@ -54,14 +54,9 @@ Our team consisted of the following individuals (alphabetized by last name):
 **NOTE**:  With the free tier of ClearDB you have at most 3,600 queries/hour and a maximum storage space of 1MB.  If you use a truncated version of this data (i.e. 10 rows), you can still replicate it.  However, if you want to use the entire dataset provided, you will need to pay for the "punch" tier.  If you run into issues accessing the database or running queries, you most likely have reached the query or storage capacity cap.
 
 4. After all the data has been uploaded, open the Jupyter Notebook.  
-5. In the Configuration section of the Jupyter Notebook, replace the connection string place holder with the information for your MySQL Workbench database.  For example, if the values for `username`, `password`, `localhost`, and `database` are `bbe114f7e59c0f`, `2386da78`, `us-cdbr-iron-east-02.cleardb.net`, and `heroku_7920e9212eb46ca`, respectively, the connection string place holder looks like this:  
+5. In the Configuration section of the Jupyter Notebook, replace the connection string place holder with the information for your MySQL Workbench database.  For example, if the values for `username`, `password`, `localhost`, and `database` are `bbe114f`, `2388`, `us-cdbr-iron-east-02.cleardb.net`, and `heroku_7920e9`, respectively, the connection string filled with database information is written like this:
     ```
-    #%sql mysql+mysqldb://<username>:<password>@<localhost>/<database>
-    ```
-    
-And, the connection string filled with database information (note the `#` being removed) is written like this:
-    ```
-    %sql mysql+mysqldb://bbe114f7e59c0f:2386da78@us-cdbr-iron-east-02.cleardb.net/heroku_7920e9212eb46ca
+    %sql mysql+mysqldb://bbe114f:2388@us-cdbr-iron-east-02.cleardb.net/heroku_7920e9
     ```
     
 **NOTE**: If you are creating your own public Github repo, make sure to never commit changes where your connection string is visible.  If you're worried about accidentally commiting the connection string, set your Github repo to private.) 
