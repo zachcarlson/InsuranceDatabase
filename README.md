@@ -59,6 +59,7 @@ Our team consisted of the following individuals (alphabetized by last name):
     #%sql mysql+mysqldb://<username>:<password>@<localhost>/<database>
     ```
 And, the connection string filled with database information (note the `#` being removed) is written like this:
+
     ```
     %sql mysql+mysqldb://bbe114f7e59c0f:2386da78@us-cdbr-iron-east-02.cleardb.net/heroku_7920e9212eb46ca
     ```
