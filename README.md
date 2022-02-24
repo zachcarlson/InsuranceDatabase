@@ -3,7 +3,7 @@
 
 ## Project Overview:
 
-This repository was created for the INFO 606 course at Drexel University, Advanced Database Management.  The overall goal of this project was to use Python to analyze health insurance data stored in a PL/SQL database.  This goal was achieved by creating a MySQL database using Heroku and ClearDB.  This repository contains SQL scripts to create the database locally.  Ensure the MySQL connection string matches your local database.  
+This repository was created for the INFO 606 course at Drexel University, Advanced Database Management.  The overall goal of this project was to use Python to analyze health insurance data stored in a PL/SQL database.  This goal was achieved by creating a MySQL database using [Heroku](https://heroku.com) and ClearDB.  This repository contains SQL scripts to create the database locally.  Ensure the MySQL connection string matches your local database.  
 
 ## File Manifest: 
 
@@ -28,6 +28,11 @@ Our team consisted of the following individuals (alphabetized by last name):
 - Jacob Stank, js4977@drexel.edu
 - Jacob William, jjw324@drexel.edu
 
+## Project Requirements
+
+- Heroku account
+- [MySQL Workbench](https://www.mysql.com/products/workbench/)
+
 ## Python Requirements
 - Python ≥ 3.8. 
 - Python libraries required: 
@@ -35,10 +40,22 @@ Our team consisted of the following individuals (alphabetized by last name):
     - `pandas`
     - `ipython-sql`
     - `mysqlclient`
-   
-## How to Execute Code: 
+  
+## How to Execute Notebook: 
 
-**A local database instance must be created in order to execute this Jupyter Notebook.  Replace the connection string in the appropriate cell with your database and login information.**  All of the code in this project needs to be opened in a Jupyter notebook environment. We recommend using [Anaconda](https://www.anaconda.com/products/individual).  Additionally, this code can be run in Google Colab or your preferred Python coding environment, assuming folder organization remains unchanged.
+**A local database instance must be created in order to execute this Jupyter Notebook.  Replace the connection string in the appropriate cell with your database and login information. (See Database Setup)**  All of the code in this project needs to be opened in a Jupyter notebook environment. We recommend using [Anaconda](https://www.anaconda.com/products/individual).  Additionally, this code can be run in Google Colab or your preferred Python coding environment, assuming folder organization remains unchanged.
+
+## Database Setup:
+
+1. Create a Heroku app with a ClearDB plugin by following this [tutorial](https://youtu.be/aEm0BN493sU).  This tutorial will walk you through setting up your Heroku app, attaching a ClearDB plugin, and accessing the database through MySQL Workbench.  You will be required to add your credit card information, however, if you select the "free" ClearDB tier, **you will not be charged.**  Due to the size of our database, we used the "punch" ClearDB tier.
+2. After logging into MySQL Workbench, click `File > Open SQL Script` and open `create_tables.sql`.  Select all the text and click the lightning icon to run the selection.
+3. After creating the tables, click `File > Open SQL Script` and open `insert_data.sql`.  Select all the text and click the lightning icon to run the selection.  
+
+**NOTE**:  With the free tier of ClearDB you have at most 3,600 queries/hour and a maximum storage space of 1MB.  If you use a truncated version of this data (i.e. 10 rows), you can still replicate it.  However, if you want to use the entire dataset provided, you will need to pay for the "punch" tier.  If you run into issues accessing the database or running queries, you most likely have reached the query or storage capacity cap.
+
+4. After all the data has been uploaded, open the Jupyter Notebook.  
+5. Replace the connection string with the connection string for your MySQL Workbench database.  (**NOTE**: If you are creating your own public Github repo, make sure to never commit changes where your connection string is visible.  If you're worried about accidentally commiting the connection string, set your Github repo to private.)
+6. Run the Notebook to produce visualizations. 
 
 ## Known Limitations of Project:
 
