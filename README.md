@@ -65,3 +65,6 @@ Our team consisted of the following individuals (alphabetized by last name):
 
 ## Known Limitations of Project:
 
+
+# configfile
+Config.py contains two variables "username", "password". 
