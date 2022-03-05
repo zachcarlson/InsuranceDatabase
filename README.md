@@ -11,6 +11,7 @@ This repository was created for the INFO 606 course at Drexel University, Advanc
 - `Folder /sql_scripts` - Contains all SQL scripts for creating database in MySQL Workbench.
     - `step01_ddl.sql` - SQL script to create relational database schema.
     - `step02_insert_data.sql` - SQL script to populate database tables.
+- `database_info.py` - Python file containing connection string to avoid exposing login credentials
 - `health_insurance.ipynb` - Main Python/SQL code that analyzes insurance MySQL data.
 
 ## Reason for Project:
