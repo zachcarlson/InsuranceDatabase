@@ -106,3 +106,6 @@ dist
 
 #configfile
 database_info.py
+__pycache__/database_info.cpython-310.pyc
+database_info.py
+database_info.py
