@@ -36,9 +36,8 @@ Our team consisted of the following individuals (alphabetized by last name):
 - Python libraries required: 
     - `matplotlib.pylot`
     - `pandas`
-    - `ipython-sql`
-    - `mysqlclient`
- - `config.py` file (See **Config File** Section)
+    - `sqlalchemy`
+ - `database_info.py` file (See **Config File** Section)
 
 ## How to Execute Notebook: 
 
@@ -52,19 +51,9 @@ Our team consisted of the following individuals (alphabetized by last name):
 
 **NOTE**:  With the free tier of ClearDB you have at most 3,600 queries/hour and a maximum storage space of 1MB.  If you use a truncated version of this data (i.e. 10 rows), you can still replicate it.  However, if you want to use the entire dataset provided, you will need to pay for the "punch" tier.  If you run into issues accessing the database or running queries, you most likely have reached the query or storage capacity cap.
 
-## `config.py` File
+## `database_info.py` File
 
-You can use a `config.py` to store your database login username and password.  Add this to your `.gitignore` to avoid accidentally committing your login information onto a public repository.
-
-
-5. In the Configuration section of the Jupyter Notebook, replace the connection string place holder with the information for your MySQL Workbench database.  For example, if the values for `username`, `password`, `localhost`, and `database` are `bbe114f`, `2388`, `us-cdbr-iron-east-02.cleardb.net`, and `heroku_7920e9`, respectively, the connection string filled with database information is written like this:
-
-    ```
-    %sql mysql+mysqldb://bbe114f:2388@us-cdbr-iron-east-02.cleardb.net/heroku_7920e9
-    ```
-    
-**NOTE**: If you are creating your own public Github repo, make sure to never commit changes where your connection string is visible.  If you're worried about accidentally commiting the connection string, set your Github repo to private.) 
-7. Run the Notebook to produce visualizations. 
+You can use a `database_info.py` to store your database connection string.  Add this to your `.gitignore` to avoid accidentally committing your login information onto a public repository.  Simply replace the `<>` variable placeholders with your login information.
 
 ## Known Limitations of Project:
 
