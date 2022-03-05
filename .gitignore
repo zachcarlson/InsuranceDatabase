@@ -105,5 +105,4 @@ dist
 .ipynb_checkpoints/insurance_database-checkpoint.ipynb
 
 #configfile
-config.py
-config.py
+database_info.py
