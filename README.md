@@ -9,8 +9,13 @@ This repository was created for the INFO 606 course at Drexel University, Advanc
 
 - `Folder /documents` - Cotains all miscellaneous documents
 - `Folder /sql_scripts` - Contains all SQL scripts for creating database in MySQL Workbench.
-    - `step01_ddl.sql` - SQL script to create relational database schema.
-    - `step02_insert_data.sql` - SQL script to populate database tables.
+    - `mysql_step01_initial_ddl.sql` - MySQL script to create relational database schema.
+    - `mysql_step02_insert_data_claim_fact.sql` - MySQL script to populate `claim_fact` table.
+    - `mysql_step03_insert_data_all_others.sql` - MySQL script to populate remaining tables.
+    - `oracle_step01_initial_ddl.sql` - Oracle SQL script to create relational database schema.
+    - `oracle_step02_insert_data_claim_fact.sql` - Oracle SQL script to populate `claim_fact` table.
+    - `oracle_step03_insert_data_all_others.sql` - Oracle SQL script to populate remaining tables.
+    - `oracle_step04_plsql.sql` - Oracle SQL script containing PL/SQL triggers, procedures, and functions.
 - `database_info.py` - Python file containing connection string to avoid exposing login credentials
 - `health_insurance.ipynb` - Main Python/SQL code that analyzes insurance MySQL data.
 
