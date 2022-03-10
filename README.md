@@ -5,6 +5,11 @@
 
 This repository was created for the INFO 606 course at Drexel University, Advanced Database Management.  The overall goal of this project was to use Python to analyze health insurance data stored in a PL/SQL database.  This goal was achieved by creating a MySQL database using [Heroku](https://heroku.com) and ClearDB.  This repository contains SQL scripts to create the database locally.  Ensure the MySQL connection string matches your local database.  
 
+ClearDB does not allow for the creation of PL/SQL procedures, functions, or triggers on a shared cluster.  A dedicated cluster was not feasible to purchase for educational purposes, so the project was split into two parts:
+
+- **Part 1:** Use Python to analyze time series data from a MySQL ClearDB+Heroku set up.  
+- **Part 2:** Implement the same database with a local Oracle configuration in order to create PL/SQL procedures, functions, and triggers.
+
 ## File Manifest: 
 
 - `Folder /documents` - Cotains all miscellaneous documents
@@ -47,19 +52,21 @@ Our team consisted of the following individuals (alphabetized by last name):
 
 ## How to Execute Notebook: 
 
-**A local database instance must be created in order to execute this Jupyter Notebook.  Replace the connection string in the appropriate cell with your database and login information. (See Database Setup)**  All of the code in this project needs to be opened in a Jupyter notebook environment. We recommend using [Anaconda](https://www.anaconda.com/products/individual).  Additionally, this code can be run in Google Colab or your preferred Python coding environment, assuming folder organization remains unchanged.
+**A local database instance must be created in order to execute this Jupyter Notebook.  Replace the connection string in the `database_info.py` file.** (See **`database_info.py` File** Section)  All of the code in this project needs to be opened in a Jupyter notebook environment. We recommend using [Anaconda](https://www.anaconda.com/products/individual).  Additionally, this code can be run in Google Colab or your preferred Python coding environment, assuming folder organization remains unchanged.
 
 ## Database Setup:
 
 1. Create a Heroku app with a ClearDB plugin by following this [tutorial](https://youtu.be/aEm0BN493sU).  This tutorial will walk you through setting up your Heroku app, attaching a ClearDB plugin, and accessing the database through MySQL Workbench.  You will be required to add your credit card information, however, if you select the "free" ClearDB tier, **you will not be charged.**  Due to the size of our database, we used the "punch" ClearDB tier.
-2. After logging into MySQL Workbench, click `File > Open SQL Script` and open `step01_ddl.sql`.  Select all the text and click the lightning icon to run the selection.
-3. After creating the tables, click `File > Open SQL Script` and open `step02_insert_data.sql`.  Select all the text and click the lightning icon to run the selection.  
+2. After logging into MySQL Workbench, click `File > Open SQL Script` and open `mysql_step01_initial_ddl.sql`.  Select all the text and click the lightning icon to run the selection.
+3. After creating the tables, click `File > Open SQL Script` and open `mysql_step02_insert_data_claim_fact.sql`.  Select all the text and click the lightning icon to run the selection.  Repeat this process for `mysql_step03_insert_data_all_others.sql`.
 
 **NOTE**:  With the free tier of ClearDB you have at most 3,600 queries/hour and a maximum storage space of 1MB.  If you use a truncated version of this data (i.e. 10 rows), you can still replicate it.  However, if you want to use the entire dataset provided, you will need to pay for the "punch" tier.  If you run into issues accessing the database or running queries, you most likely have reached the query or storage capacity cap.
 
+4. To implement the PL/SQL functionality, create a local Oracle database and use the four SQL scripts with the prefix `oracle_` saved in the `sql_scripts` folder.
+
 ## `database_info.py` File
 
-You can use a `database_info.py` to store your database connection string.  Add this to your `.gitignore` to avoid accidentally committing your login information onto a public repository.  Simply replace the `<>` variable placeholders with your login information.
+You can use a `database_info.py` to store your database connection string.  Add this to your `.gitignore` to avoid accidentally committing your login information onto a public repository.  Simply replace the `<>` variable placeholders with your login information.  To see which databases are allowed, click [here](https://docs.sqlalchemy.org/en/14/core/engines.html).
 
 ## Known Limitations of Project:
 
