@@ -11,9 +11,13 @@ ClearDB does not allow for the creation of PL/SQL procedures, functions, or trig
 - **Part 2:** Implement the same database with a local Oracle configuration in order to create PL/SQL procedures, functions, and triggers.
 
 ## File Manifest: 
-
-- `Folder /documents` - Cotains all miscellaneous documents
-- `Folder /sql_scripts` - Contains all SQL scripts for creating database in MySQL Workbench.
+- `Folder /data` - Contains insurance data in Excel format
+    - `FinalProject_Data_v1_5_mySQL.xlsx` - Contains data dictionary and data used to make MySQL scripts
+    - `FinalProject_Data_v1_5_oracle.xlsx` - Contains data dictionary and data used to make oracle scripts
+- `Folder /documents` - Contains all miscellaneous documents
+    - `Project Rubric.pdf` - Rubric for class
+    - `Proposal.docx` - Initial project proposal, required for class
+- `Folder /sql_scripts` - Contains all SQL scripts for creating database in MySQL or Oracle.
     - `mysql_step01_initial_ddl.sql` - MySQL script to create relational database schema.
     - `mysql_step02_insert_data_claim_fact.sql` - MySQL script to populate `claim_fact` table.
     - `mysql_step03_insert_data_all_others.sql` - MySQL script to populate remaining tables.
