@@ -876,14 +876,73 @@ BEGIN
     RETURN (v_provider_name);
 END GET_PROVIDER_NAME;
 /
+/* Zach Carlson 
 
+Function to return the speciality of the provider given the provider ID
+*/
+CREATE OR REPLACE FUNCTION GET_PROVIDER_SPECIALTY (provider_id IN number)
+RETURN varchar2 IS 
+    v_provider_specialtyid number;
+    v_provider_specialty varchar2(100);
+BEGIN
+    /*Get provider type, specifies whether doctor or organization*/
+    SELECT SPECIALTYID
+    INTO v_provider_specialtyid 
+    FROM DIM_PROVIDER 
+    WHERE PROVIDERID = provider_id;
+    /*Get specialty name*/
+    SELECT SPECIALTY_DESC 
+    INTO v_provider_specialty
+    FROM DIM_PROVIDER_SPECIALTY
+    WHERE SPECIALTYID = v_provider_specialtyid;
+    RETURN (v_provider_specialty);
+END GET_PROVIDER_SPECIALTY;
+/
 /* Zach Carlson
 
 Procedure to populate a table of provider names and total number of claims.*/
+
+--Step 1: Create table to populate
 DROP TABLE PROVIDER_CLAIM_REPORT;
 CREATE TABLE PROVIDER_CLAIM_REPORT
 (
     PROVIDERID INT NOT NULL,
-    GET_PROVIDER_NAME(PROVIDERID) VARCHAR2(100),
-    CLAIM_TOTALS INT NOT NULL
+    PROVIDERNAME VARCHAR2(100),
+    PROVIDERSPECIALTY VARCHAR2(100),
+    NUM_CLAIMS NUMBER(14,2),
+    SUM_ALLOWEDCHARGES NUMBER(14,2)
 );
+
+--Step 2: Create procedure
+CREATE OR REPLACE PROCEDURE populate_provider_claim_report AS
+BEGIN
+   INSERT INTO provider_claim_report (PROVIDERID, PROVIDERNAME, PROVIDERSPECIALTY, NUM_CLAIMS, SUM_ALLOWEDCHARGES) 
+    SELECT PROVIDERID, GET_PROVIDER_NAME(PROVIDERID) AS PROVIDER_NAME, GET_PROVIDER_SPECIALTY(PROVIDERID) AS PROVIDER_SPECIALTY, COUNT(DISTINCT CLAIMID) AS NUM_CLAIMS, SUM(ALLOWEDCHARGES) AS SUM_ALLOWEDCHARGES
+    FROM CLAIM_FACT
+    GROUP BY PROVIDERID; 
+    COMMIT;
+END populate_provider_claim_report;
+
+execute populate_provider_claim_report;
+
+
+/*Zach Carlson
+
+
+Trigger to update PROVIDER_CLAIM_REPORT whenever a claim is inserted, updated, or deleted*/
+CREATE OR REPLACE TRIGGER provider_claim_report_AIUDS
+    AFTER INSERT OR DELETE OR UPDATE ON claim_fact
+    DECLARE
+        CURSOR c_stat IS
+            SELECT PROVIDERID, GET_PROVIDER_NAME(PROVIDERID) AS PROVIDER_NAME, GET_PROVIDER_SPECIALTY(PROVIDERID), COUNT(DISTINCT CLAIMID) AS NUM_CLAIMS, SUM(ALLOWEDCHARGES) AS SUM_ALLOWEDCHARGES
+            FROM CLAIM_FACT
+            GROUP BY PROVIDERID;
+    BEGIN
+        FOR v_stat in c_stat LOOP
+            UPDATE provider_claim_report SET NUM_CLAIMS = v_stat.NUM_CLAIMS
+                WHERE PROVIDERID = v_stat.PROVIDERID;
+            UPDATE provider_claim_report SET SUM_ALLOWEDCHARGES = v_stat.SUM_ALLOWEDCHARGES
+                WHERE PROVIDERID = v_stat.PROVIDERID;
+        END LOOP;
+    END provider_claim_report_AIUDS;
+
