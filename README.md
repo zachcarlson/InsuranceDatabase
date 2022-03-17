@@ -1,5 +1,5 @@
 
-# Analyzing Health Insurance Data Stored in a PL/SQL MySQL Database
+# Using Python and ARIMA to Analyze Health Insurance Data Stored in a MySQL Database
 
 ## Project Overview:
 
