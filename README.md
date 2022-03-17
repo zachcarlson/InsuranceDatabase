@@ -1,5 +1,5 @@
 
-# Analyzing Health Insurance Data Stored in a PL/SQL MySQL Database
+# Using Python and ARIMA to Analyze Health Insurance Data Stored in a MySQL Database
 
 ## Project Overview:
 
@@ -80,4 +80,4 @@ You can use a `database_info.py` to store your database connection string.  Add 
 - **Scrambled identifiers.**  While essential to protect the identity of members and providers, knowing the true provider names would help answer some interesting questions regarding allowed charges by providers.
 - **Too expensive for personal use.** Hosting MySQL data larger than 1 MB with PL/SQL units on Heroku costs upwards of $50.00/month as a dedicated server is required.  This isn't ideal for someone developing a project on their own or for a team with a very restrictive budget.
 - **Predictions are not as accurate as possible.** The model's predictions for the values of 2021 were less than ideal.  Additional model configuration or trying a new model (such as linear regression) might be worthwhile.
-- **The database has no table for abbrievation values.** The claim status and type are defined by word-of-mouth.  It would be best to implement a quick table outline the true values for these one-letter values.
+- **The database has no table for abbrievated values.** The claim status and type are defined by word-of-mouth.  It would be best to implement tables that store the true values for these one-letter entries.
