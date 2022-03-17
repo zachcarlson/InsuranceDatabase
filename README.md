@@ -12,8 +12,11 @@ ClearDB does not allow for the creation of PL/SQL procedures, functions, or trig
 
 ## File Manifest: 
 - `Folder /data` - Contains insurance data in Excel format
-    - `FinalProject_Data_v1_5_mySQL.xlsx` - Contains data dictionary and data used to make MySQL scripts
-    - `FinalProject_Data_v1_5_oracle.xlsx` - Contains data dictionary and data used to make oracle scripts
+    - `FinalProject_Data_v1_5_mySQL.xlsx` - Contains data used to make MySQL scripts
+    - `FinalProject_Data_v1_5_oracle.xlsx` - Contains data used to make oracle scripts
+    - `train.csv` - Processed total monthly allowed charges for approved claims used for training. Jan 2015 - Dec 2020.
+    - `test.csv` - Processed total monthly allowed cahrges for approved claims used for testing.  Jan 2021 - Dec 2021.
+    - `Data_Dictionary.xlsx` - Contains data dictionary for both MySQL and Oracle
 - `Folder /documents` - Contains all miscellaneous documents
     - `Project Rubric.pdf` - Rubric for class
     - `Proposal.docx` - Initial project proposal, required for class
@@ -74,3 +77,7 @@ You can use a `database_info.py` to store your database connection string.  Add 
 
 ## Known Limitations of Project:
 
+- **Scrambled identifiers.**  While essential to protect the identity of members and providers, knowing the true provider names would help answer some interesting questions regarding allowed charges by providers.
+- **Too expensive for personal use.** Hosting MySQL data larger than 1 MB with PL/SQL units on Heroku costs upwards of $50.00/month as a dedicated server is required.  This isn't ideal for someone developing a project on their own or for a team with a very restrictive budget.
+- **Predictions are not as accurate as possible.** The model's predictions for the values of 2021 were less than ideal.  Additional model configuration or trying a new model (such as linear regression) might be worthwhile.
+- **The database has no table for abbrievation values.** The claim status and type are defined by word-of-mouth.  It would be best to implement a quick table outline the true values for these one-letter values.
