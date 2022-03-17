@@ -105,12 +105,7 @@ dist
 
 #database connection string info
 database_info.py
-database_info_heroku.py
-database_info_oracle.py
 __pycache__/
-
-#database testing notebooks
-testing.ipynb
 
 #Juypyter Notebook checkpoints
 .ipynb_checkpoints/
