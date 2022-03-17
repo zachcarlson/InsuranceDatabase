@@ -1,7 +1,7 @@
 --------
 
 /* Katy Matulay
-Function returns age to be used in age demographic analysis view*/
+CALC_AGE Function returns age to be used in age demographic analysis view*/
 
 CREATE OR REPLACE FUNCTION CALC_AGE(p_dob DATE)
 RETURN NUMBER IS
@@ -15,7 +15,7 @@ RETURN NUMBER IS
 --------
 
 /*Katy Matulay
-The following function calculates a cumulative comorbidity score for members, to be used in the high_risk_patient views*/
+CALC_COMORBID function calculates a cumulative comorbidity score for members, to be used in the high_risk_patient views*/
 
 CREATE OR REPLACE FUNCTION CALC_Comorbid (p_memberID IN INT)
 RETURN INT IS
@@ -24,7 +24,8 @@ RETURN INT IS
         SELECT SUM(MAX(DIABETES) + MAX(COPD) + MAX(CAD) + MAX(CHF) + MAX(HYPERTENSION))
         INTO v_ComorbidityScore
         FROM DIM_MEMBER_CONDITION
-        WHERE MEMBERID = p_memberID;
+        WHERE MEMBERID = p_memberID
+        GROUP BY MEMBERID;
         RETURN(v_ComorbidityScore);
 END CALC_Comorbid;
 /
@@ -32,7 +33,7 @@ END CALC_Comorbid;
 --------
 
 /*Katy Matulay
-The following function calculates a comorbidity score for members in their most recent enrollment period (based on max enddate), to be used in the high_risk_patient views and HR_Mem_Outreach table */
+CALC_COMORBID_CURRENT function calculates a comorbidity score for members in their most recent enrollment period (based on max enddate), to be used in the high_risk_patient views and HR_Mem_Outreach table */
 
 CREATE OR REPLACE FUNCTION CALC_Comorbid_Current (p_memberID IN INT)
 RETURN INT IS
@@ -53,7 +54,7 @@ END CALC_Comorbid_Current;
 --------
 
 /*Katy Matulay
-/*The following function determines if members have received a covid vaccination 
+GET_VACXCOVID function determines if members have received a covid vaccination 
 and represents it as a numeric count (i.e 1st dose, 2nd, 3rd, etc.), 
 to be used in the high_risk_patient views
 The covid vaccine code values were determined using 
@@ -77,7 +78,7 @@ END get_VaxCovid;
 -------
 
 /*Katy Matulay
-The following function determines if members have received a covid vaccination in the most recent enrollment period (based on max enddate) and represents it as a numeric count (i.e 1st dose, 2nd, 3rd, etc.), 
+GET_VAXCOVID_CURRENT function determines if members have received a covid vaccination in the most recent enrollment period (based on max enddate) and represents it as a numeric count (i.e 1st dose, 2nd, 3rd, etc.), 
 to be used in the high_risk_patient views and HR_Mem_Outreach table
 The covid vaccine code values were determined using https://www.cms.gov/medicare/medicare-part-b-drug-average-sales-price/covid-19-vaccines-and-monoclonal-antibodies */
 
@@ -104,7 +105,7 @@ END get_VaxCovid_Current;
 --------
 
 /*Katy Matulay
-The following function determines a members historical flu vaccine status as an int value, to be used in the high_risk_patient views
+GET_VAXFLU function determines a members historical flu vaccine status as an int value, to be used in the high_risk_patient views
 The flu vaccine code values were determined using https://www.cms.gov/medicare/preventive-services/flu-shot-coding */
 
 CREATE OR REPLACE FUNCTION get_VaxFlu (p_memberID IN INT)
@@ -125,7 +126,7 @@ END get_VaxFlu;
 --------
 
 /*Katy Matulay
-The following function determines a members current enrollment period flu vaccine status as an int value, to be used in the high_risk_patient views and HR_Mem_Outreach table
+GET_VAXFLU_CURRENT function determines a members current enrollment period flu vaccine status as an int value, to be used in the high_risk_patient views and HR_Mem_Outreach table
 The flu vaccine code values were determined using https://www.cms.gov/medicare/preventive-services/flu-shot-coding */
 
 CREATE OR REPLACE FUNCTION get_VaxFlu_Current (p_memberID IN INT)
@@ -151,7 +152,7 @@ END get_VaxFlu_Current;
 ------
 
 /*Katy Matulay
-The following function determines the number of preventative care visits as an int, to be used in the high_risk_patient views
+GET_PC function determines the number of preventative care visits as an int, to be used in the high_risk_patient views
 Preventative care visits are denoted by the PROF_CD value of P43*/
 
 CREATE OR REPLACE FUNCTION get_PC (p_memberID IN INT)
@@ -174,7 +175,7 @@ END get_PC;
 --------
 
 /*Katy Matulay
-The following function determines the number of preventative care visits as an int per current enrollment period, to be used in the high_risk_patient views and HR_Mem_Outreach table
+GET_PC_CURRENT function determines the number of preventative care visits as an int per current enrollment period, to be used in the high_risk_patient views and HR_Mem_Outreach table
 Preventative care visits are denoted by the PROF_CD value of P43*/
 
 CREATE OR REPLACE FUNCTION get_PC_Current (p_memberID IN INT)
@@ -205,7 +206,7 @@ END get_PC_Current;
 
 --------
 /* Katy Matulay
-The following view represents a snapshot of patients historical tabulations regarding high risk conditions and preventative care. It utilizes the functions: calc_age, get_VaxCovid, get_VaxFlu, and get_PC to determine cumulative historical counts*/
+Step 1 : The following view represents a snapshot of patients historical tabulations regarding high risk conditions and preventative care. It utilizes the functions: calc_age, get_VaxCovid, get_VaxFlu, and get_PC to determine cumulative historical counts*/
 
 DROP VIEW v_HIST_HIGH_RISK_PATIENTS;
 CREATE OR REPLACE VIEW v_HIST_HIGH_RISK_PATIENTS as(
@@ -226,11 +227,10 @@ select * from v_HIST_HIGH_RISK_PATIENTS;
 
 
 ---------
-/* Jacob Stank
-The following DDL creates the table HR_Mem_Outreach is to be utilized in the procedure populate_member_outreach and triggers created by other team members, and will store
+/*The following DDL creates the table HR_Mem_Outreach is to be utilized in the procedure populate_member_outreach and triggers Claim_Fact_HighDollar_AIUR and Claim_Fact_HighRiskProcedure (Jake Williamson's), and will store
 member contact details, condition information, demographics, and current high risk condition calcs from earlier functions*/
 
-/*Step1: Create DDL for High_Risk_Member_Outreach table as HR_Mem_Outreach */
+/*Step 2: Create DDL for High_Risk_Member_Outreach table as HR_Mem_Outreach */
 DROP TABLE HR_MEM_Outreach;
 CREATE TABLE HR_MEM_Outreach
     (IDNO 			INT NOT NULL,
@@ -254,11 +254,11 @@ CREATE TABLE HR_MEM_Outreach
     PRIMARY KEY (IDNO));
 
 
-/*Step 2: Create sequence for primary key*/
+/*Step 3: Create sequence for primary key*/
 create sequence seq_hr_mem_outreach start with 1 increment by 1;
 
-/*Step 3: Create Procedure
-The following procedure creates a HIGH RISK MEMBER OUTREACH (HR_MEM_OUTREACH) table which can be utilized to input values from Triggers for members that have high dollar claims and high risk conditions*/
+/*Step 4: Create Procedure
+The following procedure populate_member_outreach creates a HIGH RISK MEMBER OUTREACH (HR_MEM_OUTREACH) table which can be utilized to input values from Triggers for members that have high dollar claims and high risk conditions*/
 CREATE OR REPLACE PROCEDURE populate_member_outreach AS
     BEGIN
         DELETE FROM HR_Mem_Outreach;
@@ -288,13 +288,34 @@ CREATE OR REPLACE PROCEDURE populate_member_outreach AS
         COMMIT;
     End populate_member_outreach;
 
-/*Execute the procedure*/
-execute populate_member_outreach;
+/*Step 5: Execute the procedure*/
+exec populate_member_outreach;
 
-/*View the results*/
+/*Step 6: Create trigger
+The following trigger Claim_Fact_HighDollar_AIUR triggers when a claim on CLAIM_FACT contains an allowed charge > $25,000 and updates the field High_Dollar with 'Y' in the table HR_MEM_OUTREACH
+NOTE: data would need to be reloaded/inserted after creating this to see the results */
+
+CREATE OR REPLACE TRIGGER Claim_Fact_HighDollar_AIUR
+
+    AFTER 
+        INSERT OR
+        UPDATE OF allowedcharges
+    ON Claim_Fact
+FOR EACH ROW
+BEGIN
+    IF :NEW.allowedcharges > 25000 THEN
+        UPDATE HR_MEM_Outreach
+        SET High_Dollar = 'Y'
+        WHERE MemberID = :NEW.MEMBERID;
+    END IF;
+END;
+/	 
+/*Step 7: Optional- drop and reload all data using the insert.txt file to see the results of the trigger*/
+
+/*Step 8: View the results*/
 select * from HR_Mem_Outreach;
 
-	 
+
 --------------
 /* Jacob Stank
 /*** This section of code is intended to create a Member Summary table which will store data at the Member - Month level for quick summarization of information ***/
@@ -718,26 +739,6 @@ GROUP BY D1.LVL_01, D1.LVL_02, D1.IncMonth
 END;
 /    
 	
-/* Jacob Williamson
-Triggers when a claim contains an allowed charge > $25,000
-
-Updates the High Risk Member Outreach table and flags the member
-as having a high-dollar claim
-*/
-CREATE OR REPLACE TRIGGER Claim_Fact_HighDollar
-    AFTER 
-        INSERT OR
-        UPDATE OF allowedcharges
-    ON Claim_Fact
-FOR EACH ROW
-BEGIN
-    IF :NEW.allowedcharges > 25000 THEN
-        UPDATE HR_MEM_Outreach
-        SET High_Dollar = 'Y'
-        WHERE MemberID = :NEW.MEMBERID;
-    END IF;
-END;
-/
 
 /* Jacob Williamson
 Triggers when a claim for a high-risk procedure is entered
