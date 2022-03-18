@@ -20,6 +20,7 @@ ClearDB does not allow for the creation of PL/SQL procedures, functions, or trig
 - `Folder /documents` - Contains all miscellaneous documents
     - `Project Rubric.pdf` - Rubric for class
     - `Proposal.docx` - Initial project proposal, required for class
+    - `Final_Report.docx` - Word document summarizing entire project, required for class
 - `Folder /sql_scripts` - Contains all SQL scripts for creating database in MySQL or Oracle.
     - `mysql_step01_initial_ddl.sql` - MySQL script to create relational database schema.
     - `mysql_step02_insert_data_claim_fact.sql` - MySQL script to populate `claim_fact` table.
